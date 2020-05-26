@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lin_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg2"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_head_red" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/d44"
+        android:background="@color/lin_xian" />
+
+    <LinearLayout
+        android:id="@+id/lin_frist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/d30">
+
+        <TextView
+            android:id="@+id/tx_frist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今日热点"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/s15" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/img_frist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/setting_ico_selected"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/d30"
+        android:background="@color/lin_xian" />
+
+    <LinearLayout
+        android:id="@+id/lin_three"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/d30">
+
+        <TextView
+            android:id="@+id/tx_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="社         交"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/s15" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/img_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/setting_ico_selected"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/d30"
+        android:background="@color/lin_xian" />
+
+    <LinearLayout
+        android:id="@+id/lin_two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/d30"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tx_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="资讯分享"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/s15" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/img_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/setting_ico_selected"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/lin_xian"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/lin_four"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tx_four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="用户管理"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/s15" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/img_four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/setting_ico_selected"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lin_xian" />
+</LinearLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/d108"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+    <TextView
+        android:id="@+id/tx_name" 
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_hui1"
+        android:padding="@dimen/d30"
+        android:textSize="@dimen/s16"/>
+    <RelativeLayout
+        android:id="@+id/rel_check" 
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="@dimen/d30"
+        >
+	    <TextView 
+	        android:id="@+id/tx_check"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textColor="@color/text_red"
+	        android:textSize="@dimen/s14"
+	        android:tag="false"
+	        android:gravity="center"
+	        android:layout_centerInParent="true"
+	        android:text="订阅"
+	        android:background="@drawable/subscribe_btn_nor"/>
+    </RelativeLayout>
+
+</LinearLayout>

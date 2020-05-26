@@ -1,0 +1,77 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* ic_launcher-web.png
+* message.keystore
+* message_new.keystore
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:20.0.0
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app/src/main/AndroidManifest.xml
+* assets/ => app/src/main/assets/
+* libs/SocialSDK_QQZone_1.jar => app/libs/SocialSDK_QQZone_1.jar
+* libs/SocialSDK_QQZone_2.jar => app/libs/SocialSDK_QQZone_2.jar
+* libs/SocialSDK_QQZone_3.jar => app/libs/SocialSDK_QQZone_3.jar
+* libs/SocialSDK_Sina.jar => app/libs/SocialSDK_Sina.jar
+* libs/SocialSDK_WeiXin_1.jar => app/libs/SocialSDK_WeiXin_1.jar
+* libs/SocialSDK_WeiXin_2.jar => app/libs/SocialSDK_WeiXin_2.jar
+* libs/SocialSDK_email.jar => app/libs/SocialSDK_email.jar
+* libs/Xg_sdk_v2.38_20150405_2046.jar => app/libs/Xg_sdk_v2.38_20150405_2046.jar
+* libs/arm64-v8a/libweibosdkcore.so => app/src/main/jniLibs/arm64-v8a/libweibosdkcore.so
+* libs/armeabi-v7a/libweibosdkcore.so => app/src/main/jniLibs/armeabi-v7a/libweibosdkcore.so
+* libs/armeabi/libtpnsSecurity.so => app/src/main/jniLibs/armeabi/libtpnsSecurity.so
+* libs/armeabi/libtpnsWatchdog.so => app/src/main/jniLibs/armeabi/libtpnsWatchdog.so
+* libs/armeabi/libweibosdkcore.so => app/src/main/jniLibs/armeabi/libweibosdkcore.so
+* libs/httpmime-4.1.3.jar => app/libs/httpmime-4.1.3.jar
+* libs/jg_filter_sdk_1.1.jar => app/libs/jg_filter_sdk_1.1.jar
+* libs/jxl.jar => app/libs/jxl.jar
+* libs/mid-sdk-2.10.jar => app/libs/mid-sdk-2.10.jar
+* libs/mips/libweibosdkcore.so => app/src/main/jniLibs/mips/libweibosdkcore.so
+* libs/mips64/libweibosdkcore.so => app/src/main/jniLibs/mips64/libweibosdkcore.so
+* libs/poi-3.8.jar => app/libs/poi-3.8.jar
+* libs/swipemenulistview.jar => app/libs/swipemenulistview.jar
+* libs/umeng_social_sdk.jar => app/libs/umeng_social_sdk.jar
+* libs/weibosdk.jar => app/libs/weibosdk.jar
+* libs/wup-1.0.0-SNAPSHOT.jar => app/libs/wup-1.0.0-SNAPSHOT.jar
+* libs/x86/libweibosdkcore.so => app/src/main/jniLibs/x86/libweibosdkcore.so
+* libs/x86_64/libweibosdkcore.so => app/src/main/jniLibs/x86_64/libweibosdkcore.so
+* lint.xml => app/lint.xml
+* proguard-project.txt => app/proguard-project.txt
+* res/ => app/src/main/res/
+* src/ => app/src/main/java/
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:background="@color/pop_bg_w">
+       <GridView
+           android:id="@+id/grid"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="@dimen/d96"
+           android:horizontalSpacing="@dimen/d24"
+           android:verticalSpacing="@dimen/d30"
+           android:numColumns="4"></GridView>
+</RelativeLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="@dimen/d420"
+   android:layout_height="@dimen/d240"
+   android:gravity="center"
+   android:layout_gravity="center"
+   android:orientation="vertical"
+   android:background="@drawable/popup_bg">
+   <TextView
+       android:id="@+id/tx_collect" 
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textColor="@color/text_hui3"
+       android:textSize="@dimen/s20"
+       android:layout_marginTop="@dimen/d30"
+       android:gravity="center"
+       android:text="收藏成功"/>
+   <ImageView 
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="@dimen/d24"
+       android:src="@drawable/popup_ico_suc"/>
+</LinearLayout>
