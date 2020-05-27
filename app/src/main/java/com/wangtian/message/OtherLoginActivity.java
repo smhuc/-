@@ -132,12 +132,17 @@ public class OtherLoginActivity extends BaseActivity{
 					@Override
 					public void onError(Throwable e) {
 						super.onError(e);
+						if (dialog != null && dialog.isShowing()) {
+							dialog.dismiss();
+						}
 					}
 
 					@Override
 					public void onCompleted() {
 						super.onCompleted();
-						dialog.dismiss();
+						if (dialog != null && dialog.isShowing()) {
+							dialog.dismiss();
+						}
 					}
 				});
 

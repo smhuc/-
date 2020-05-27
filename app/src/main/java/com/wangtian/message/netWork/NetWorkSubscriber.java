@@ -1,9 +1,10 @@
 package com.wangtian.message.netWork;
 
-import android.util.Log;
 import android.widget.Toast;
 
 import com.wangtian.message.MyApplication;
+
+import java.io.IOException;
 
 
 /**
@@ -24,12 +25,20 @@ public abstract class NetWorkSubscriber<T> extends BaseSubscriber<T> {
             if (Thread.currentThread().getName().equals("main")) {
                 Toast.makeText(MyApplication.getContext(), "网络连接异常", Toast.LENGTH_SHORT).show();
             }
+        } else if (e instanceof ToastException) {
+            if (Thread.currentThread().getName().equals("main")) {
+                Toast.makeText(MyApplication.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+        } else if (e instanceof IOException) {
+            if (Thread.currentThread().getName().equals("main")) {
+                Toast.makeText(MyApplication.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
         } else {
             if (Thread.currentThread().getName().equals("main")) {
                 Toast.makeText(MyApplication.getContext(), "连接服务器失败", Toast.LENGTH_SHORT).show();
             }
-            Log.e("NetWorkSubscriber", "onError: " + e.getMessage());
         }
-
     }
 }

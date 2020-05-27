@@ -55,6 +55,11 @@ public interface INetInterface {
     @FormUrlEncoded
     @POST("app/sociality/getSocilaDetail")
     Observable< SocialNetListBean.IndexVOListBean> getsocialDetail(@FieldMap Map<String, String> param);
+    @FormUrlEncoded
+    @POST("app/sociality/getSocilaReply")
+    Observable< SocialNetListBean> getsocialDetailReply(@FieldMap Map<String, String> param);
+
+
 
     @FormUrlEncoded
     @POST("app/category/categoryList")

@@ -17,6 +17,7 @@ public class SocialNetListBean {
 
     private int count;
     private List<IndexVOListBean> IndexVOList;
+    private List<ReplyListBean> replylist;
 
     public int getCount() {
         return count;
@@ -32,6 +33,127 @@ public class SocialNetListBean {
 
     public void setIndexVOList(List<IndexVOListBean> IndexVOList) {
         this.IndexVOList = IndexVOList;
+    }
+
+    public List<ReplyListBean> getReplylist() {
+        return replylist;
+    }
+
+    public void setReplylist(List<ReplyListBean> replylist) {
+        this.replylist = replylist;
+    }
+
+    public static class ReplyListBean {
+        /**{
+         "pageNum": 1,
+         "pageSize": 10,
+         "total": 0,
+         "list": [],
+         "rows": [],
+         "where": "",
+         "params": [],
+         "content": "@BorisJohnson @COP26 @sciencemuseum You are mad to believe these climate change nutters. By all means protect habitat and find/use alternative energy: after all one day the oil will run out. The only current option for our energy needs will be nuclear (preferably fusion - a long way off).",
+         "vc_target_user_id": "38c45f017898c01cbc2a74716dfd9671",
+         "vc_postid": null,
+         "vc_publisher_url": null,
+         "vc_publisher_nickname": "john carins",
+         "vc_publisher_photo_url_local": "twitter/3131144855/a7383357a9c5dee5922aba1d7bb86a89.png",
+         "text_picture_url_local": null,
+         "text_content": "0",
+         "dt_pubdate": "2020-02-04 20:04:44",
+         "vc_tweetid": "1224663865557950469",
+         "vc_tweeturl": "https://www.twitter.com/borisjohnson/status/1224663865557950469",
+         "vc_publisherid": "839507779438198785",
+         "vc_publisher_username": "john_carins",
+         "vc_contentid": "1224665086847000576",
+         "vc_reply_user": "borisjohnson",
+         "vc_favorites_count": "2",
+         "vc_reply_count": "0",
+         "vc_picture_url_local": "0",
+         "vc_video_url_local": "0",
+         "vc_video_id": null,
+         "vc_author_id": null,
+         "vc_author__home_page": null,
+         "vc_author_text": null,
+         "vc_author_thumbnail_local": null,
+         "vc_reply_to_id": null,
+         "vc_comment_id": null,
+         "vc_like_count": null,
+         "vc_published_time_text": null,
+         "type": "0",
+         "secondType": "2",
+         "dataId": null,
+         "queryKeyword": null,
+         "page_comment": 0,
+         "rowsPerPage_comment": 0,
+         "cloundKeyword": null,
+         "keywords": "0",
+         "keywordName": null
+         }*/
+
+        private int pageNum;
+        private int pageSize;
+        private int total;
+        private String content;//内容
+        private String vc_publisher_photo_url_local;// 头像地址
+        private String vc_publisher_nickname;//昵称
+        private String dt_pubdate;// 发布时间
+
+        public int getPageNum() {
+            return pageNum;
+        }
+
+        public void setPageNum(int pageNum) {
+            this.pageNum = pageNum;
+        }
+
+        public int getPageSize() {
+            return pageSize;
+        }
+
+        public void setPageSize(int pageSize) {
+            this.pageSize = pageSize;
+        }
+
+        public int getTotal() {
+            return total;
+        }
+
+        public void setTotal(int total) {
+            this.total = total;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public String getVc_publisher_photo_url_local() {
+            return vc_publisher_photo_url_local;
+        }
+
+        public void setVc_publisher_photo_url_local(String vc_publisher_photo_url_local) {
+            this.vc_publisher_photo_url_local = vc_publisher_photo_url_local;
+        }
+
+        public String getVc_publisher_nickname() {
+            return vc_publisher_nickname;
+        }
+
+        public void setVc_publisher_nickname(String vc_publisher_nickname) {
+            this.vc_publisher_nickname = vc_publisher_nickname;
+        }
+
+        public String getDt_pubdate() {
+            return dt_pubdate;
+        }
+
+        public void setDt_pubdate(String dt_pubdate) {
+            this.dt_pubdate = dt_pubdate;
+        }
     }
 
     public static class IndexVOListBean {

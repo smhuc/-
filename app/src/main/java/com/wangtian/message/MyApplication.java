@@ -6,6 +6,7 @@ import android.support.multidex.MultiDexApplication;
 
 import com.wangtian.message.bean.User;
 import com.wangtian.message.netBean.LoginBean;
+import com.wangtian.message.util.ScreenParam;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -26,7 +27,6 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
         ctx = this;
     }
 

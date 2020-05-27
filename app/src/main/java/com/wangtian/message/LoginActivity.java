@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushManager;
@@ -158,12 +159,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                                         count = 0;
                                         login(name.getText().toString(), psd.getText().toString());
                                     } else {
-                                        NewToast.makeText(LoginActivity.this, "该账号密码输入错误三次，请一小时以后再试", 2000).show();
+                                        NewToast.makeText(LoginActivity.this, "该账号密码输入错误三次，请一小时以后再试", Toast.LENGTH_LONG).show();
 
                                     }
                                 }
                             } else {
-                                NewToast.makeText(LoginActivity.this, "您输入的验证码有误", 2000).show();
+                                NewToast.makeText(LoginActivity.this, "您输入的验证码有误", Toast.LENGTH_LONG).show();
                                 String str1 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                                 Random random1 = new Random();
                                 yan = new StringBuffer();
@@ -175,13 +176,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                             }
                         } else {
 //						NewToast.makeText(LoginActivity.this,"验证码不能为空",0).show();
-                            NewToast.makeText(LoginActivity.this, "验证码不能为空", 2000).show();
+                            NewToast.makeText(LoginActivity.this, "验证码不能为空", Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        NewToast.makeText(LoginActivity.this, "密码不能为空", 2000).show();
+                        NewToast.makeText(LoginActivity.this, "密码不能为空", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    NewToast.makeText(LoginActivity.this, "账号不能为空", 2000).show();
+                    NewToast.makeText(LoginActivity.this, "账号不能为空", Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.img_cancal:
@@ -209,18 +210,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         stringStringHashMap.put("username", name);
         stringStringHashMap.put("password", password);
         stringStringHashMap.put("caCardId", "");
-//        String url = "http://192.168.1.103/api/app/loginApp/login/";
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    String result = doJsonPost(url, stringStringHashMap.toString());
-//                    Log.d(TAG, "result = " + result);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
 
         NetWorkUtils.getInstance().getInterfaceService().Login(stringStringHashMap)
                 .subscribeOn(Schedulers.io())
@@ -311,7 +300,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
-                        dialog.dismiss();
+                        if (dialog != null && dialog.isShowing()) {
+                            dialog.dismiss();
+                        }
                         yanzhen.setText("");
                         Editor ed = sp.edit();
                         count += 1;
@@ -333,7 +324,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                     @Override
                     public void onCompleted() {
                         super.onCompleted();
-                        dialog.dismiss();
+                        if (dialog != null && dialog.isShowing()) {
+                            dialog.dismiss();
+                        }
                     }
                 });
 

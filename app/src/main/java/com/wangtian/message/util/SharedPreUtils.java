@@ -57,7 +57,9 @@ public class SharedPreUtils {
 
     public void setString(String key, String value) {
         mPref.edit().putString(key, value).apply();
-    } public void setStringCommit(String key, String value) {
+    }
+
+    public void setStringCommit(String key, String value) {
         mPref.edit().putString(key, value).commit();
     }
 

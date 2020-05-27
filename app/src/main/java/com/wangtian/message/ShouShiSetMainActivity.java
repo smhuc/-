@@ -68,7 +68,7 @@ public class ShouShiSetMainActivity extends BaseMenuActivity {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //				Editor ed = sp.edit();
 				if(isChecked){
-//					SharedPreUtils.getInstance().setBoolean("NO_USE_HAND",false);
+					SharedPreUtils.getInstance().setBoolean("NO_USE_HAND",false);
 //					lin_all.setVisibility(View.VISIBLE);
 					String string = SharedPreUtils.getInstance().getString(Consts.USER_HAND, "");
 					if (TextUtils.isEmpty(string)){

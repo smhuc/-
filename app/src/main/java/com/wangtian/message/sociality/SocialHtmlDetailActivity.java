@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +25,8 @@ import com.wangtian.message.netWork.NetWorkSubscriber;
 import com.wangtian.message.netWork.NetWorkUtils;
 import com.wangtian.message.util.GlideUtils;
 import com.wangtian.message.util.MxgsaTagHandler;
+import com.wangtian.message.util.ScreenParam;
+import com.wangtian.message.view.CommentPopWindow;
 import com.wangtian.message.view.NoScrollWebView;
 
 import java.math.BigInteger;
@@ -38,7 +41,8 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class SocialHtmlDetailActivity extends Activity {
+public class SocialHtmlDetailActivity extends Activity implements CommentPopWindow.LoadDataInterface {
+    private static final String TAG = SocialHtmlDetailActivity.class.getSimpleName();
 
     @BindView(R.id.img_left)
     ImageView mImgLeft;
@@ -77,9 +81,15 @@ public class SocialHtmlDetailActivity extends Activity {
     TextView mRetweetNumTv;
     @BindView(R.id.favorite_num_tv)
     TextView mFavoriteNumTv;
+    @BindView(R.id.ll_comment_num_tv)
+    LinearLayout mLlCommentNum;
+    @BindView(R.id.root_ll)
+    LinearLayout root;
+
     private ProgressDialog dialog;
     private static String DETAIL_MD5 = "DETAIL_MD5";
     private SocialNetListBean.IndexVOListBean mInformationListBean;
+    private SocialNetListBean.ReplyListBean mReplyListBean;
     private boolean mShowTr = false;
     private String mDst;
 
@@ -87,6 +97,11 @@ public class SocialHtmlDetailActivity extends Activity {
     private String retweet_count = "";
     private String favorites_count = "";
     private String reply_count = "";
+
+    private int page = 1;
+    private int mCount = 0;
+    private CommentPopWindow commentPopWindow;
+    private List<SocialNetListBean.ReplyListBean> mDatas = null;
 
     public static void start(Context context, String DetailMd5) {
         Intent intent = new Intent(context, SocialHtmlDetailActivity.class);
@@ -99,6 +114,8 @@ public class SocialHtmlDetailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_html_detail);
         ButterKnife.bind(this);
+        ScreenParam.getInstance().init(this);
+        mDatas = new ArrayList<>();
         mRelLeft.setVisibility(View.VISIBLE);
         mImgLeft.setVisibility(View.VISIBLE);
         mRelRight.setVisibility(View.VISIBLE);
@@ -134,7 +151,41 @@ public class SocialHtmlDetailActivity extends Activity {
             }
 
         });
+
         getNet();
+
+        mLlCommentNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String commentNum = mCommentNumTv.getText().toString().trim();
+                if (!TextUtils.isEmpty(commentNum)) {
+                    if (Long.parseLong(commentNum) <= 0) {
+                        Toast.makeText(SocialHtmlDetailActivity.this, "暂无评论内容~", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (mDatas != null && mDatas.size() > 0) {
+                            showPopContent();
+                        } else {
+                            Toast.makeText(SocialHtmlDetailActivity.this, "获取评论内容失败，请退出当前页面重进~", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private void showPopContent() {
+        if (commentPopWindow == null) {
+            commentPopWindow = new CommentPopWindow(SocialHtmlDetailActivity.this, this, mCount);
+        }
+        commentPopWindow.setHeight(ScreenParam.height * 2 / 3);
+        commentPopWindow.showAtLocation(root, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        Notify();
+    }
+
+    private void Notify() {
+        if (commentPopWindow != null) {
+            commentPopWindow.notifyData(mDatas);
+        }
     }
 
     private void getNet() {
@@ -161,7 +212,7 @@ public class SocialHtmlDetailActivity extends Activity {
                         mContentTimeTv.setText(informationListBean.getDt_pubdate());
                         String content = informationListBean.getText_post_content();
 //                        String content = "<big>武漢</big>の空港で受け入れる<mark>日本</mark>の飛行機の便数が決まっているので、座席数第一で考えます。 https://t.co/CVEDqmMwf";
-                        Log.d("SocialHtmlDetail", "content = : " + content);
+                        Log.d(TAG, "content = : " + content);
                         mContentTv.setText(Html.fromHtml(content, null, new MxgsaTagHandler(SocialHtmlDetailActivity.this)));
                         forward_count = !TextUtils.isEmpty((String) informationListBean.getVc_forward_count()) ? (String) informationListBean.getVc_forward_count() : "0";
                         retweet_count = !TextUtils.isEmpty(informationListBean.getVc_retweet_count()) ? informationListBean.getVc_retweet_count() : "0";
@@ -188,12 +239,52 @@ public class SocialHtmlDetailActivity extends Activity {
 
 
                         }
-                        tralateInfo();
-
+                        tralateInfo(mInformationListBean.getText_post_content(), null);
+                        getCommentContent(false);
 
                     }
                 });
     }
+
+    private void getCommentContent(boolean isRefresh) {
+        String vc_md5 = getIntent().getStringExtra(DETAIL_MD5);
+        HashMap<String, String> param = new HashMap<>();
+        param.put("token", MyApplication.sLoginBean.getToken());
+        param.put("dataId", vc_md5);
+        param.put("queryKeyword", MyApplication.socialKeyword);
+        param.put("cloundKeyword", "");//暂时没用
+        param.put("page_comment", String.valueOf(page));
+        param.put("rowsPerPage_comment", String.valueOf(10));
+        NetWorkUtils.getInstance().getInterfaceService().getsocialDetailReply(param)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new NetWorkSubscriber<SocialNetListBean>() {
+
+                    @Override
+                    public void onNext(SocialNetListBean socialNetListBean) {
+                        mCount = socialNetListBean.getCount();
+                        Log.d(TAG, "mCount = " + mCount);
+                        Log.d(TAG, "page = " + page);
+                        List<SocialNetListBean.ReplyListBean> replyListBeans = socialNetListBean.getReplylist();
+                        if (replyListBeans != null) {
+                            if (page == 1) {
+                                mDatas.clear();
+                            }
+                            mDatas.addAll(replyListBeans);
+                            page++;
+                        }
+                        if (isRefresh) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Notify();
+                                }
+                            });
+                        }
+                    }
+                });
+    }
+
 
     public String getHtmlData(String content, String title, String time, String from) {
         String head = "<head>" +
@@ -209,10 +300,8 @@ public class SocialHtmlDetailActivity extends Activity {
 
     }
 
-    public void tralateInfo() {
+    public void tralateInfo(String value, TextView tv) {
         HashMap<String, String> param = new HashMap<>();
-        String htmlData = mInformationListBean.getText_post_content();
-        String value = (htmlData);
         param.put("q", value);
         param.put("from", "auto");
         param.put("to", "zh");
@@ -236,11 +325,20 @@ public class SocialHtmlDetailActivity extends Activity {
 
                     @Override
                     public void onNext(BaiduBean baiduBean) {
-                        mDst = "";
+
                         List<BaiduBean.TransResultBean> resultBeanList = baiduBean.getTrans_result();
                         if (resultBeanList == null) {
                             return;
                         }
+                        if (tv != null) {
+                            String content = "";
+                            for (BaiduBean.TransResultBean transResultBean : baiduBean.getTrans_result()) {
+                                content = content + transResultBean.getDst();
+                            }
+                            tv.setText(content);
+                            return;
+                        }
+                        mDst = "";
                         for (BaiduBean.TransResultBean transResultBean : baiduBean.getTrans_result()) {
                             mDst = mDst + transResultBean.getDst();
                         }
@@ -267,5 +365,24 @@ public class SocialHtmlDetailActivity extends Activity {
         String txtcontent = strHtml.replaceAll("</?[^>]+>", ""); //剔出<html>的标签
         txtcontent = txtcontent.replaceAll("<a>\\s*|\t|\r|\n</a>", "");//去除字符串中的空格,回车,换行符,制表符
         return txtcontent;
+    }
+
+    @Override
+    public void refresh() {
+        page = 1;
+        Log.d(TAG, "refresh: ");
+        getCommentContent(true);
+    }
+
+    @Override
+    public void loadMore() {
+        Log.d(TAG, "loadMore: ");
+        getCommentContent(true);
+    }
+
+    @Override
+    public void loadTranslate(TextView tv, String content) {
+        tralateInfo(content, tv);
+
     }
 }
