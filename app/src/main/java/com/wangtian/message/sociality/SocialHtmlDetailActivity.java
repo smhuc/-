@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -24,8 +23,8 @@ import com.wangtian.message.netWork.NetWorkBaiduUtils;
 import com.wangtian.message.netWork.NetWorkSubscriber;
 import com.wangtian.message.netWork.NetWorkUtils;
 import com.wangtian.message.util.GlideUtils;
-import com.wangtian.message.util.MxgsaTagHandler;
 import com.wangtian.message.util.ScreenParam;
+import com.wangtian.message.util.Utility;
 import com.wangtian.message.view.CommentPopWindow;
 import com.wangtian.message.view.NoScrollWebView;
 
@@ -142,12 +141,12 @@ public class SocialHtmlDetailActivity extends Activity implements CommentPopWind
             }
             if (mShowTr) {
                 mShowTr = false;
-                mContentTv.setText(Html.fromHtml(mInformationListBean.getText_post_content(), null,
-                        new MxgsaTagHandler(SocialHtmlDetailActivity.this)));
+                mContentTv.setText(Utility.getConvertContent(mInformationListBean.getText_post_content()));
             } else {
                 mShowTr = true;
-                mContentTv.setText(Html.fromHtml(mDst, null,
-                        new MxgsaTagHandler(SocialHtmlDetailActivity.this)));
+                mContentTv.setText(mDst);
+                Log.d(TAG, "content =  " + mInformationListBean.getText_post_content());
+                Log.d(TAG, "translate content=  " + mDst);
             }
 
         });
@@ -160,12 +159,12 @@ public class SocialHtmlDetailActivity extends Activity implements CommentPopWind
                 String commentNum = mCommentNumTv.getText().toString().trim();
                 if (!TextUtils.isEmpty(commentNum)) {
                     if (Long.parseLong(commentNum) <= 0) {
-                        Toast.makeText(SocialHtmlDetailActivity.this, "暂无评论内容~", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SocialHtmlDetailActivity.this, "暂未采集评论信息，请耐心等待~", Toast.LENGTH_SHORT).show();
                     } else {
                         if (mDatas != null && mDatas.size() > 0) {
                             showPopContent();
                         } else {
-                            Toast.makeText(SocialHtmlDetailActivity.this, "获取评论内容失败，请退出当前页面重进~", Toast.LENGTH_LONG).show();
+                            Toast.makeText(SocialHtmlDetailActivity.this, "暂未采集评论信息，请耐心等待~", Toast.LENGTH_LONG).show();
                         }
                     }
                 }
@@ -211,9 +210,10 @@ public class SocialHtmlDetailActivity extends Activity implements CommentPopWind
                         mEnglishNameTv.setText(name);
                         mContentTimeTv.setText(informationListBean.getDt_pubdate());
                         String content = informationListBean.getText_post_content();
-//                        String content = "<big>武漢</big>の空港で受け入れる<mark>日本</mark>の飛行機の便数が決まっているので、座席数第一で考えます。 https://t.co/CVEDqmMwf";
+//                        String content = "の空港で<big>多少克</big>受け入れる<mark>222</mark>の飛行機の<big>日本</big>便数が<mark>日本</mark>決まっているので、座席数第一<mark><big>333</big></mark>で考えます。 https://t.co/CVEDqmMwf";
                         Log.d(TAG, "content = : " + content);
-                        mContentTv.setText(Html.fromHtml(content, null, new MxgsaTagHandler(SocialHtmlDetailActivity.this)));
+
+                        mContentTv.setText(Utility.getConvertContent(content));
                         forward_count = !TextUtils.isEmpty((String) informationListBean.getVc_forward_count()) ? (String) informationListBean.getVc_forward_count() : "0";
                         retweet_count = !TextUtils.isEmpty(informationListBean.getVc_retweet_count()) ? informationListBean.getVc_retweet_count() : "0";
                         favorites_count = !TextUtils.isEmpty(informationListBean.getVc_favorites_count()) ? informationListBean.getVc_favorites_count() : "0";
@@ -239,7 +239,8 @@ public class SocialHtmlDetailActivity extends Activity implements CommentPopWind
 
 
                         }
-                        tralateInfo(mInformationListBean.getText_post_content(), null);
+                        String translate = Utility.removeTag(mInformationListBean.getText_post_content());
+                        tralateInfo(translate, null);
                         getCommentContent(false);
 
                     }
@@ -382,7 +383,6 @@ public class SocialHtmlDetailActivity extends Activity implements CommentPopWind
 
     @Override
     public void loadTranslate(TextView tv, String content) {
-        tralateInfo(content, tv);
-
+        tralateInfo(Utility.removeTag(content), tv);
     }
 }

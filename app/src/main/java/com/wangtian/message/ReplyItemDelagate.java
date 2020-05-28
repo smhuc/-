@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.wangtian.message.netBean.SocialNetListBean;
 import com.wangtian.message.util.GlideUtils;
+import com.wangtian.message.util.Utility;
 import com.wangtian.message.view.CommentPopWindow;
 import com.zhy.adapter.recyclerview.base.ItemViewDelegate;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -36,7 +37,8 @@ public class ReplyItemDelagate implements ItemViewDelegate<SocialNetListBean.Rep
 
     @Override
     public void convert(ViewHolder holder, SocialNetListBean.ReplyListBean replyListBean, int position) {
-        holder.setText(R.id.content, !TextUtils.isEmpty(replyListBean.getContent()) ? replyListBean.getContent() : "");
+        String content = !TextUtils.isEmpty(replyListBean.getContent()) ? replyListBean.getContent() : "";
+        holder.setText(R.id.content, Utility.getConvertContent(content).toString());
         holder.setText(R.id.user_name, !TextUtils.isEmpty(replyListBean.getVc_publisher_nickname()) ? replyListBean.getVc_publisher_nickname() : "");
         holder.setText(R.id.user_update_time, !TextUtils.isEmpty(replyListBean.getDt_pubdate()) ? replyListBean.getDt_pubdate() : "");
         ImageView view = holder.getView(R.id.user_picture);
@@ -49,7 +51,7 @@ public class ReplyItemDelagate implements ItemViewDelegate<SocialNetListBean.Rep
             public void onClick(View v) {
                 if ("翻译".equals(tv.getText().toString())) {
                     tv.setText("原文");
-                    loadDataInterface.loadTranslate(holder.getView(R.id.content),replyListBean.getContent());
+                    loadDataInterface.loadTranslate(holder.getView(R.id.content), replyListBean.getContent());
                 } else {
                     tv.setText("翻译");
                     holder.setText(R.id.content, !TextUtils.isEmpty(replyListBean.getContent()) ? replyListBean.getContent() : "");
